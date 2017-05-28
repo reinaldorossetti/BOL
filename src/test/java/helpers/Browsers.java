@@ -39,8 +39,6 @@ public class Browsers {
                     .addTo(DesiredCapabilities.firefox());
             caps.setCapability("acceptInsecureCerts", true);
             caps.setCapability("marionette", true);
-
-            //Execução do teste bol
             driver = new FirefoxDriver(caps);
 
         }
