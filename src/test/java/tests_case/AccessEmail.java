@@ -1,68 +1,47 @@
 package tests_case;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import helpers.BasePage;
+import helpers.Browsers;
+import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-
 public class AccessEmail {
 
-	public static void main(String[] args) throws InterruptedException {
-		
-		LocalDateTime now = LocalDateTime.now();
+    public static void main(String[] args) throws InterruptedException, IOException {
 
-		int timeout = 5000;
+        LocalDateTime now = LocalDateTime.now();
+        BasePage base = new BasePage();
+        Browsers browser = new Browsers();
+        WebDriver driver = null;
 
-		ChromeDriver driver = new ChromeDriver();
+        driver = Browsers.setBrowser("chrome");
 
-		driver.get("http://www.bol.com.br/");
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get("http://www.bol.com.br/");
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
+        driver.switchTo().defaultContent();
 
-		WebElement myUser = (new WebDriverWait(driver, timeout))
-				  .until(ExpectedConditions.visibilityOfElementLocated(By.name("user")));
-		System.out.println(myUser.getText());
-		myUser.sendKeys("ccatalani");
+        base.sendKeys(driver, ".mod-header-login-user", "ccatalani");
 
-		WebElement myPassword = (new WebDriverWait(driver, timeout))
-				  .until(ExpectedConditions.visibilityOfElementLocated(By.name("pass")));
+        base.sendKeys(driver, ".mod-header-login-pass", "Mudar$123");
 
-		myPassword.sendKeys("Mudar$123");
+        base.clickElement(driver, "button.mod-header-login-button");
 
-		WebElement lgnBtn = (new WebDriverWait(driver, timeout))
-				  .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button.mod-header-login-button")));
-		lgnBtn.click();
+        base.clickElement(driver, ".bt-write");
 
+        base.sendKeys(driver, "#fake_input__field-to", "ccatalani@bol.com.br");
 
-		WebElement btnEscrever = (new WebDriverWait(driver, timeout))
-				.until(ExpectedConditions.visibilityOfElementLocated(By.className("bt-write")));
-		btnEscrever.click();
+        base.sendKeys(driver, "#field-subject", "Teste de Envio "+ now);
 
+        base.clickElement(driver, "menu.bt-compose-send.highlight span");
 
-		WebElement mailTo = (new WebDriverWait(driver, timeout))
-				  .until(ExpectedConditions.presenceOfElementLocated(By.id("fake_input__field-to")));
-		mailTo.sendKeys("ccatalani@bol.com.br");
+        driver.close();
 
-		WebElement fldSbj = (new WebDriverWait(driver, timeout))
-				  .until(ExpectedConditions.presenceOfElementLocated(By.id("field-subject")));
-		fldSbj.sendKeys("Teste de Envio "+ now);
+    }
 
 
-		WebElement button_send = (new WebDriverWait(driver, timeout))
-				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("menu.bt-compose-send.highlight span")));
-		System.out.println(button_send.getText());
-		button_send.click();
-
-
-		driver.close();
-			  
-	  
-		
-	}
 
 }
