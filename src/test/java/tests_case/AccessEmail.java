@@ -3,7 +3,6 @@ package tests_case;
 import helpers.BasePage;
 import helpers.Browsers;
 import org.openqa.selenium.WebDriver;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +15,6 @@ public class AccessEmail {
         BasePage base = new BasePage();
         Browsers browser = new Browsers();
         WebDriver driver = null;
-
         driver = Browsers.setBrowser("chrome");
 
         driver.get("http://www.bol.com.br/");
@@ -41,7 +39,4 @@ public class AccessEmail {
         driver.close();
 
     }
-
-
-
 }
